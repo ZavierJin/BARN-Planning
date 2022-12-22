@@ -83,7 +83,7 @@ class GazeboSimulation():
         curr_pose = self._model_state('jackal', 'world').pose
         translation = (curr_pose.position.x, curr_pose.position.y, curr_pose.position.z)
         rotation = (curr_pose.orientation.x, curr_pose.orientation.y, curr_pose.orientation.z, curr_pose.orientation.w)
-        parent = "map"
+        parent = "odom"
         # parent = "world_base"
         child = "base_link"
         self._pub_pose.publish(curr_pose)

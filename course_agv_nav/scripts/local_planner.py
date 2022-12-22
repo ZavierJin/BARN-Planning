@@ -68,7 +68,7 @@ class LocalPlanner:
         # get laser & update obstacle
         # self.laser_sub = rospy.Subscriber('/scan_emma_nav_front', LaserScan,
         #                                   self.laserCallback)
-        self.laser_sub = rospy.Subscriber('/scan', LaserScan,
+        self.laser_sub = rospy.Subscriber('/front/scan', LaserScan,
                                           self.laserCallback)
         self.planner_thread = None
         # self.listener = keyboard.Listener(on_press=self.on_press)

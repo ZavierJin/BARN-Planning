@@ -89,44 +89,12 @@ if __name__ == "__main__":
     ## 1. Launch your navigation stack
     ## (Customize this block to add your own navigation stack)
     ##########################################################################################
-    launch_file = join(base_path, '..', 'jackal_helper','launch/move_base_eband.launch')
+    launch_file = join(base_path, '..', 'course_agv_nav','launch/nav.launch')
     nav_stack_process = subprocess.Popen([
         'roslaunch',
         launch_file,
         'world_id:=' + str(args.id)
     ])
-
-    print("ok")
-    # gazebo_sim.pub_pose()
-    # Make sure your navigation stack recives a goal of (0, 10, 0), which is 10 meters away
-    # along postive y-axis.
-    import actionlib
-    from geometry_msgs.msg import Quaternion
-    from move_base_msgs.msg import MoveBaseGoal, MoveBaseAction
-    nav_as = actionlib.SimpleActionClient('/move_base', MoveBaseAction)
-    mb_goal = MoveBaseGoal()
-    mb_goal.target_pose.header.frame_id = 'odom'
-    mb_goal.target_pose.pose.position.x = -2
-    mb_goal.target_pose.pose.position.y = 13
-    mb_goal.target_pose.pose.position.z = 0
-    mb_goal.target_pose.pose.orientation = Quaternion(0, 0, 0, 1)
-    
-    # 
-    time.sleep(5)
-
-    # launch_file = join(base_path, '..', 'rrt_dwa','launch/plan.launch')
-    # nav_stack_process = subprocess.Popen([
-    #     'roslaunch',
-    #     launch_file,
-    #     'world_id:=' + str(args.id)
-    # ])
-
-    # launch_file = join(base_path, '..', 'course_agv_nav','launch/local.launch')
-    # nav_stack_process = subprocess.Popen([
-    #     'roslaunch',
-    #     launch_file,
-    #     # 'world_id:=' + str(args.id)
-    # ])
     
     # TODO: WRITE YOUR OWN NAVIGATION ALGORITHMS HERE
     # get laser data : data = gazebo_sim.get_laser_scan()
@@ -140,15 +108,15 @@ if __name__ == "__main__":
     curr_time = rospy.get_time()
     pos = gazebo_sim.get_model_state().pose.position
     curr_coor = (pos.x, pos.y)
-    # print(init_coor,curr_coor)
+
     
-    # # check whether the robot started to move
-    # while compute_distance(init_coor, curr_coor) < 0.1:
-    #     gazebo_sim.pub_pose()
-    #     curr_time = rospy.get_time()
-    #     pos = gazebo_sim.get_model_state().pose.position
-    #     curr_coor = (pos.x, pos.y)
-    #     time.sleep(0.01)
+    # check whether the robot started to move
+    while compute_distance(init_coor, curr_coor) < 0.1:
+        gazebo_sim.pub_pose()
+        curr_time = rospy.get_time()
+        pos = gazebo_sim.get_model_state().pose.position
+        curr_coor = (pos.x, pos.y)
+        time.sleep(0.01)
     
     # start navigation, check position, time and collision
     start_time = curr_time
@@ -159,8 +127,6 @@ if __name__ == "__main__":
     # print(collided)
     while compute_distance(goal_coor, curr_coor) > 1 and not collided and curr_time - start_time < 100:
         gazebo_sim.pub_pose()
-        # nav_as.wait_for_server()
-        nav_as.send_goal(mb_goal)
         curr_time = rospy.get_time()
         pos = gazebo_sim.get_model_state().pose.position
         curr_coor = (pos.x, pos.y)

@@ -33,7 +33,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LaserScan
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -164,7 +164,7 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz/LaserScan
       Color: 255; 255; 255
-      Color Transformer: ""
+      Color Transformer: Intensity
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -202,7 +202,7 @@ Visualization Manager:
       Radius: 0.029999999329447746
       Shaft Diameter: 0.05000000074505806
       Shaft Length: 0.10000000149011612
-      Topic: /course_agv/global_path
+      Topic: /move_base/EBandPlannerROS/global_plan
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -313,7 +313,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: map
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:

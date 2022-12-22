@@ -24,7 +24,7 @@ KWB = 0.15
 # KWA = 8
 # KWB = 1.5
 
-TARGET_V = 0.8
+TARGET_V = 1.5
 
 
 class FeedBackPlanner:
